@@ -14,7 +14,7 @@ public class BudgetronFrame extends JFrame {
     // Runs the application
     public void start(){
         while(true){
-            String option = JOptionPane.showInputDialog(this, """
+            String input = JOptionPane.showInputDialog(this, """
                 Budgetron Finance Manager
                 1. Sign in
                 2. Register
@@ -22,9 +22,10 @@ public class BudgetronFrame extends JFrame {
                 0. Exit
                 """, "Welcome", JOptionPane.PLAIN_MESSAGE);
 
-            switch(option){
+            switch(input){
                 case "1"->{
-                    System.out.println("Sign in");
+                    SignInThread signInThread = new SignInThread();
+                    signInThread.start();
                 }
                 case "2"->{
                     System.out.println("Register");
@@ -41,10 +42,6 @@ public class BudgetronFrame extends JFrame {
                 }
             }
         }
-    }
-
-    public void signIn(){
-
     }
 
     public static BudgetronFrame getInstance(){
