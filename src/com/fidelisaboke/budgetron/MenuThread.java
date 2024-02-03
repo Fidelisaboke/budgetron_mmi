@@ -1,10 +1,8 @@
 package com.fidelisaboke.budgetron;
 
-import java.util.Scanner;
-
 public class MenuThread extends Thread{
-    Scanner input;
-    public MenuThread(Scanner input){
+    String input;
+    public MenuThread(String input){
         this.input = input;
     }
 }
