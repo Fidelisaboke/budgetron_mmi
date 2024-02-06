@@ -16,19 +16,18 @@ public class BudgetronFrame extends JFrame {
         while(true){
             String input = JOptionPane.showInputDialog(this, """
                 Budgetron Finance Manager
-                1. Sign in
-                2. Register
+                1. Budget
+                2. Financial records
                 3. Help
                 0. Exit
                 """, "Welcome", JOptionPane.PLAIN_MESSAGE);
 
             switch(input){
                 case "1"->{
-                    SignInThread signInThread = new SignInThread();
-                    signInThread.start();
+                    System.out.println("Budget");
                 }
                 case "2"->{
-                    System.out.println("Register");
+                    System.out.println("Financial Records");
                 }
                 case "3"->{
                     System.out.println("Help");
