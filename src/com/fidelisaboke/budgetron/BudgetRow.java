@@ -5,9 +5,9 @@ package com.fidelisaboke.budgetron;
  */
 public class BudgetRow {
     private String name;
-    private float amount;
+    private double amount;
 
-    public BudgetRow(String name, float amount) {
+    public BudgetRow(String name, double amount) {
         this.name = name;
         this.amount = amount;
     }
@@ -19,7 +19,7 @@ public class BudgetRow {
         this.name = name;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 

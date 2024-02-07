@@ -1,6 +1,5 @@
 package com.fidelisaboke.budgetron;
 
-import javax.swing.*;
 import java.lang.reflect.Field;
 import java.sql.*;
 
@@ -13,10 +12,10 @@ public abstract class DatabaseHandler<T>{
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/db_books";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/db_budgetron";
     private Connection conn;
     private PreparedStatement pst;
-    private int paramIndex = 1;
+    private int paramIndex;
     private String errorMsg;
 
     // Protected Properties:
@@ -39,7 +38,7 @@ public abstract class DatabaseHandler<T>{
             conn =  DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException e){
             errorMsg = e.getMessage();
-            InfoHandler.displayError(className, errorMsg);
+            MsgHandler.displayMessage("An error occurred", errorMsg, className);
         }
 
     }
@@ -70,7 +69,7 @@ public abstract class DatabaseHandler<T>{
                 value = field.get(data);
             } catch(IllegalAccessException e){
                 errorMsg = "Error accessing field: " + columnName;
-                InfoHandler.displayError(className, errorMsg);
+                MsgHandler.displayMessage("An error occurred", errorMsg, className);
                 throw new SQLException(errorMsg);
             }
             if(value != null){
@@ -95,15 +94,11 @@ public abstract class DatabaseHandler<T>{
                 }
             }
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(
-                    BudgetronFrame.getInstance(),
-                    "Data inserted successfully.",
-                    "Insert Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+            MsgHandler.displayMessage("Insert Success", "Data inserted successfully.", className);
             this.close();
         } catch(IllegalAccessException e){
             errorMsg = "Error accessing field while setting params: " + e.getMessage();
-            InfoHandler.displayError(className, errorMsg);
+            MsgHandler.displayMessage("An error occurred", errorMsg, className);
             throw new SQLException(errorMsg);
         }
     }

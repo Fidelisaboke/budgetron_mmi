@@ -1,11 +1,12 @@
 package com.fidelisaboke.budgetron;
 
 import javax.swing.*;
-import java.util.Scanner;
+import java.sql.SQLException;
 
 public class BudgetronFrame extends JFrame {
     private static BudgetronFrame instance;
-    private final Scanner input = new Scanner(System.in);
+    private String errorMsg;
+    private String className = BudgetronFrame.class.getName();
 
     private BudgetronFrame(){
 
@@ -24,7 +25,12 @@ public class BudgetronFrame extends JFrame {
 
             switch(input){
                 case "1"->{
-                    System.out.println("Budget");
+                    try{
+                        Budget.getInstance().insert(new BudgetRow("budgetOne", 1450.00));
+                    } catch (SQLException e){
+                        errorMsg = e.getMessage();
+                        MsgHandler.displayMessage("Insert Error", errorMsg, className);
+                    }
                 }
                 case "2"->{
                     System.out.println("Financial Records");
