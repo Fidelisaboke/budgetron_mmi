@@ -86,6 +86,7 @@ public abstract class DatabaseHandler<T>{
         try{
             this.connect();
             pst = conn.prepareStatement(sql);
+            paramIndex = 1;
             for(Field field : fields){
                 field.setAccessible(true);
                 Object value = field.get(data);
