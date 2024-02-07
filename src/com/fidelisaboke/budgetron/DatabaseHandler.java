@@ -1,19 +1,15 @@
 package com.fidelisaboke.budgetron;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Abstract class to be extended by database models. Performs database operations
  */
 public abstract class DatabaseHandler<T>{
     // Private Properties:
+    private final String className = DatabaseHandler.class.getName();
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
@@ -42,12 +38,8 @@ public abstract class DatabaseHandler<T>{
             Class.forName(DRIVER);
             conn =  DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException e){
-            JOptionPane.showMessageDialog(
-                    BudgetronFrame.getInstance(),
-                    e.getMessage(),
-                    "An Error Occurred", JOptionPane.ERROR_MESSAGE);
             errorMsg = e.getMessage();
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, errorMsg);
+            InfoHandler.displayError(className, errorMsg);
         }
 
     }
@@ -78,7 +70,7 @@ public abstract class DatabaseHandler<T>{
                 value = field.get(data);
             } catch(IllegalAccessException e){
                 errorMsg = "Error accessing field: " + columnName;
-                Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, errorMsg);
+                InfoHandler.displayError(className, errorMsg);
                 throw new SQLException(errorMsg);
             }
             if(value != null){
@@ -93,6 +85,7 @@ public abstract class DatabaseHandler<T>{
 
         String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES ("+ values +")";
         try{
+            this.connect();
             pst = conn.prepareStatement(sql);
             for(Field field : fields){
                 field.setAccessible(true);
@@ -102,9 +95,15 @@ public abstract class DatabaseHandler<T>{
                 }
             }
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(
+                    BudgetronFrame.getInstance(),
+                    "Data inserted successfully.",
+                    "Insert Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+            this.close();
         } catch(IllegalAccessException e){
             errorMsg = "Error accessing field while setting params: " + e.getMessage();
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, errorMsg);
+            InfoHandler.displayError(className, errorMsg);
             throw new SQLException(errorMsg);
         }
     }
