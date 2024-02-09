@@ -2,6 +2,8 @@ package com.fidelisaboke.budgetron;
 
 import java.lang.reflect.Field;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Abstract class to be extended by database models. Performs database operations
@@ -38,7 +40,7 @@ public abstract class DatabaseHandler<T>{
             conn =  DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException e){
             errorMsg = e.getMessage();
-            MsgHandler.displayMessage("An error occurred", errorMsg, className);
+            MsgHandler.displayMessage("An error occurred", errorMsg, className, Level.SEVERE);
         }
 
     }
@@ -54,7 +56,11 @@ public abstract class DatabaseHandler<T>{
     }
 
 
-    // Method that inserts a new record to the DB
+    /**
+     * Inserts a new record to the database
+     * @param data The data to be inserted.
+     * @throws SQLException If a database access error occurs
+     */
     protected void insert(T data) throws SQLException{
        StringBuilder columns = new StringBuilder();
        StringBuilder values = new StringBuilder();
@@ -69,7 +75,7 @@ public abstract class DatabaseHandler<T>{
                 value = field.get(data);
             } catch(IllegalAccessException e){
                 errorMsg = "Error accessing field: " + columnName;
-                MsgHandler.displayMessage("An error occurred", errorMsg, className);
+                MsgHandler.displayMessage("An error occurred", errorMsg, className, Level.SEVERE);
                 throw new SQLException(errorMsg);
             }
             if(value != null){
@@ -83,6 +89,8 @@ public abstract class DatabaseHandler<T>{
         }
 
         String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES ("+ values +")";
+        Logger.getLogger(className).log(Level.INFO,"SQL Statement -> " + sql);
+
         try{
             this.connect();
             pst = conn.prepareStatement(sql);
@@ -95,11 +103,15 @@ public abstract class DatabaseHandler<T>{
                 }
             }
             pst.executeUpdate();
-            MsgHandler.displayMessage("Insert Success", "Data inserted successfully.", className);
+            MsgHandler.displayMessage(
+                    "Insert Success",
+                    "Data inserted successfully.",
+                    className,
+                    Level.INFO);
             this.close();
         } catch(IllegalAccessException e){
             errorMsg = "Error accessing field while setting params: " + e.getMessage();
-            MsgHandler.displayMessage("An error occurred", errorMsg, className);
+            MsgHandler.displayMessage("An error occurred", errorMsg, className, Level.SEVERE);
             throw new SQLException(errorMsg);
         }
     }

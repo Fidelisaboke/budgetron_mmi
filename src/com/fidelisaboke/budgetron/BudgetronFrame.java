@@ -2,6 +2,7 @@ package com.fidelisaboke.budgetron;
 
 import javax.swing.*;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 public class BudgetronFrame extends JFrame {
     private static BudgetronFrame instance;
@@ -29,7 +30,7 @@ public class BudgetronFrame extends JFrame {
                         Budget.getInstance().insert(new BudgetRow("budgetOne", 1450.00));
                     } catch (SQLException e){
                         errorMsg = e.getMessage();
-                        MsgHandler.displayMessage("Insert Error", errorMsg, className);
+                        MsgHandler.displayMessage("Insert Error", errorMsg, className, Level.SEVERE);
                     }
                 }
                 case "2"->{

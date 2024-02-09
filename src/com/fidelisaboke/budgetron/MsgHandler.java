@@ -9,12 +9,12 @@ import java.util.logging.Logger;
  */
 public class MsgHandler {
 
-    public static void displayMessage(String msgTitle, String msgBody, String className){
+    public static void displayMessage(String msgTitle, String msgBody, String className, Level level){
         JOptionPane.showMessageDialog(
                 BudgetronFrame.getInstance(),
                 msgBody,
                 msgTitle,
                 JOptionPane.INFORMATION_MESSAGE);
-        Logger.getLogger(className).log(Level.INFO, msgBody);
+        Logger.getLogger(className).log(level, msgBody);
     }
 }
