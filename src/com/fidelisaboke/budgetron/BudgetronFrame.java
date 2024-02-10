@@ -27,7 +27,7 @@ public class BudgetronFrame extends JFrame {
             switch(input){
                 case "1"->{
                     try{
-                        Budget.getInstance().insert(new BudgetRow("budgetOne", 1450.00));
+                        Budget.getInstance().update(2, new BudgetRow("budgetOne", 1450.00));
                     } catch (SQLException e){
                         errorMsg = e.getMessage();
                         MsgHandler.displayMessage("Insert Error", errorMsg, className, Level.SEVERE);
