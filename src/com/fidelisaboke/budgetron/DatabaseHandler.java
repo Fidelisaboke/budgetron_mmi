@@ -233,6 +233,28 @@ public abstract class DatabaseHandler<T> {
         }
         return rs;
     }
+
+    /**
+     * Returns all data of a table's column
+     * @param columnName The name of the column to get data from
+     * @return List of data of a specific column
+     */
+    public ArrayList<Object> getColumn(String columnName) {
+        ArrayList<Object> columnValues = new ArrayList<>();
+        try{
+            ResultSet rs = this.retrieveAll(columnName);
+            while(rs.next()){
+                Object columnValue = rs.getObject(columnName);
+                columnValues.add(columnValue);
+            }
+            rs.close();
+        } catch(SQLException e){
+            String errorMsg = e.getMessage();
+            MsgHandler.displayMessage("Column data retrieval error", errorMsg, className, Level.SEVERE);
+        }
+        return columnValues;
+    }
+
     /**
      * Returns an object of generic type T, representing a single record (row) of a table.
      * The generic type is specified by the models using their corresponding row classes
@@ -259,11 +281,4 @@ public abstract class DatabaseHandler<T> {
      * @return A list of row objects, or null if an error occurs or no records were found
      */
     public abstract ArrayList<T> getAll();
-
-    /**
-     * Returns all data of a table's column
-     * @param columnName The name of the column to get data from
-     * @return List of data of a specific column
-     */
-    public abstract ArrayList<Object> getColumn(String columnName);
 }

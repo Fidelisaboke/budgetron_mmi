@@ -76,26 +76,8 @@ public class Budget extends DatabaseHandler<BudgetRow>{
             rs.close();
         } catch (SQLException e){
             String errorMsg = e.getMessage();
-            MsgHandler.displayMessage("Data retireval error", errorMsg, className, Level.SEVERE);
+            MsgHandler.displayMessage("Data retrieval error", errorMsg, className, Level.SEVERE);
         }
         return budgetRows;
     }
-
-    @Override
-    public ArrayList<Object> getColumn(String columnName) {
-        ArrayList<Object> columnValues = new ArrayList<>();
-        try{
-            ResultSet rs = super.retrieveAll(columnName);
-            while(rs.next()){
-                Object columnValue = rs.getObject(columnName);
-                columnValues.add(columnValue);
-            }
-            rs.close();
-        } catch(SQLException e){
-            String errorMsg = e.getMessage();
-            MsgHandler.displayMessage("Column data retrieval error", errorMsg, className, Level.SEVERE);
-        }
-        return columnValues;
-    }
-
 }
