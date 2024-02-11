@@ -3,7 +3,6 @@ package com.fidelisaboke.budgetron;
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -216,12 +215,12 @@ public abstract class DatabaseHandler<T> {
     }
 
     /**
-     * Retrieves all records of a table as a ResultSet
+     * Retrieves all records of a table as a ResultSet (or values of a column)
      * @return ResultSet containing all records of a table
      */
-    public ResultSet retrieveAll() {
+    public ResultSet retrieveAll(String columnName) {
         String tableName = this.getTableName();
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECT " + columnName + " FROM " + tableName;
         Logger.getLogger(className).log(Level.INFO, "SQL Statement -> " + sql);
 
         try{
@@ -246,16 +245,25 @@ public abstract class DatabaseHandler<T> {
     /**
      * Returns objects of generic type T, representing rows of a table, specified by a field value.
      * The generic type is specified by the models using their corresponding row classes
+     *
      * @param identifier The field or column used to specify the record to be retrieved
-     * @param value Value of the field that identifies the records
-     * @return Row object(s), or null if an error occurs or no records were found
+     * @param value      Value of the field that identifies the records
+     * @return A list of row objects, or null if an error occurs or no records were found
      */
-    public abstract T getAll(String identifier, Object value);
+    public abstract ArrayList<T> getAll(String identifier, Object value);
 
     /**
      * Returns all rows of a table as objects of generic type T specified by the row classes related
      * to the database models
-     * @return Row objects, or null if an error occurs or no records were found
+     *
+     * @return A list of row objects, or null if an error occurs or no records were found
      */
-    public abstract T getAll();
+    public abstract ArrayList<T> getAll();
+
+    /**
+     * Returns all data of a table's column
+     * @param columnName The name of the column to get data from
+     * @return List of data of a specific column
+     */
+    public abstract ArrayList<Object> getColumn(String columnName);
 }

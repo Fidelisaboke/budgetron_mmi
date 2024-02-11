@@ -1,7 +1,9 @@
 package com.fidelisaboke.budgetron;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 /**
@@ -30,6 +32,9 @@ public class Budget extends DatabaseHandler<BudgetRow>{
             if(rs.next()){
                 String name = rs.getString("name");
                 double amount = rs.getDouble("amount");
+                System.out.println(name);
+                System.out.println(amount);
+                rs.close();
                 return new BudgetRow(name, amount);
             }
             rs.close();
@@ -41,12 +46,56 @@ public class Budget extends DatabaseHandler<BudgetRow>{
     }
 
     @Override
-    public BudgetRow getAll(String identifier, Object value) {
-        return null;
+    public ArrayList<BudgetRow> getAll(String identifier, Object value) {
+        ArrayList<BudgetRow> budgetRows = new ArrayList<>();
+        try{
+            ResultSet rs = super.retrieve(identifier, value);
+            while(rs.next()){
+                String name = rs.getString("name");
+                double amount = rs.getDouble("amount");
+                budgetRows.add(new BudgetRow(name, amount));
+            }
+            rs.close();
+        } catch (SQLException e){
+            String errorMsg = e.getMessage();
+            MsgHandler.displayMessage("Data retrieval error", errorMsg, className, Level.SEVERE);
+        }
+        return budgetRows;
     }
 
     @Override
-    public BudgetRow getAll() {
-        return null;
+    public ArrayList<BudgetRow> getAll() {
+        ArrayList<BudgetRow> budgetRows = new ArrayList<>();
+        try{
+            ResultSet rs = super.retrieveAll("*");
+            while(rs.next()){
+                String name = rs.getString("name");
+                double amount = rs.getDouble("amount");
+                budgetRows.add(new BudgetRow(name, amount));
+            }
+            rs.close();
+        } catch (SQLException e){
+            String errorMsg = e.getMessage();
+            MsgHandler.displayMessage("Data retireval error", errorMsg, className, Level.SEVERE);
+        }
+        return budgetRows;
     }
+
+    @Override
+    public ArrayList<Object> getColumn(String columnName) {
+        ArrayList<Object> columnValues = new ArrayList<>();
+        try{
+            ResultSet rs = super.retrieveAll(columnName);
+            while(rs.next()){
+                Object columnValue = rs.getObject(columnName);
+                columnValues.add(columnValue);
+            }
+            rs.close();
+        } catch(SQLException e){
+            String errorMsg = e.getMessage();
+            MsgHandler.displayMessage("Column data retrieval error", errorMsg, className, Level.SEVERE);
+        }
+        return columnValues;
+    }
+
 }
