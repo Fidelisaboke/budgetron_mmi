@@ -7,13 +7,20 @@ import java.util.logging.Level;
 public class BudgetronFrame extends JFrame {
     private static BudgetronFrame instance;
     private String errorMsg;
-    private String className = BudgetronFrame.class.getName();
+    private final String className = BudgetronFrame.class.getName();
 
     private BudgetronFrame(){
 
     }
 
-    // Runs the application
+    public static BudgetronFrame getInstance(){
+        if(instance == null){
+            instance = new BudgetronFrame();
+        }
+
+        return instance;
+    }
+
     public void start(){
         while(true){
             String input = JOptionPane.showInputDialog(this, """
@@ -26,13 +33,6 @@ public class BudgetronFrame extends JFrame {
 
             switch(input){
                 case "1"->{
-                    try{
-                        BudgetRow budgetRow = Budget.getInstance().get("id", 1);
-                        System.out.println(budgetRow.getName());
-                    } catch (Exception e){
-                        errorMsg = e.getMessage();
-                        MsgHandler.displayMessage("Insert Error", errorMsg, className, Level.SEVERE);
-                    }
                 }
                 case "2"->{
                     System.out.println("Financial Records");
@@ -49,13 +49,5 @@ public class BudgetronFrame extends JFrame {
                 }
             }
         }
-    }
-
-    public static BudgetronFrame getInstance(){
-        if(instance == null){
-            instance = new BudgetronFrame();
-        }
-
-        return instance;
     }
 }
