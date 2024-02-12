@@ -32,8 +32,6 @@ public class Budget extends DatabaseHandler<BudgetRow>{
             if(rs.next()){
                 String name = rs.getString("name");
                 double amount = rs.getDouble("amount");
-                System.out.println(name);
-                System.out.println(amount);
                 rs.close();
                 return new BudgetRow(name, amount);
             }

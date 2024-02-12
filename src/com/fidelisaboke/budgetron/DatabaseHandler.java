@@ -1,5 +1,7 @@
 package com.fidelisaboke.budgetron;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +20,6 @@ public abstract class DatabaseHandler<T> {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/db_budgetron";
     private Connection conn;
     private PreparedStatement pst;
-    private Statement stmt;
     private ResultSet rs;
     private int paramIndex;
     private String errorMsg;
@@ -67,7 +68,7 @@ public abstract class DatabaseHandler<T> {
      * @param data The data to be inserted.
      * @throws SQLException If a database access error occurs
      */
-    public void insert(T data) throws SQLException {
+    public void insert(@NotNull T data) throws SQLException {
         StringBuilder columns = new StringBuilder();
         StringBuilder values = new StringBuilder();
         String tableName = this.getTableName();
@@ -124,12 +125,11 @@ public abstract class DatabaseHandler<T> {
 
     /**
      * Updates an existing record in the database
-     *
      * @param id   The id of the record in the database
      * @param data The data sent to update the record in question
      * @throws SQLException If a database access error occurs
      */
-    protected void update(int id, T data) throws SQLException {
+    protected void update(int id, @NotNull T data) throws SQLException {
         StringBuilder placeholders = new StringBuilder();
         String tableName = this.getTableName();
 
@@ -225,7 +225,7 @@ public abstract class DatabaseHandler<T> {
 
         try{
             this.connect();
-            stmt = conn.createStatement();
+            Statement stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException e){
             errorMsg = "Error fetching all records: " + e.getMessage();
