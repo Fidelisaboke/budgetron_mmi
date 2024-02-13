@@ -64,7 +64,7 @@ public abstract class DatabaseHandler<T> {
 
     /**
      * Inserts a new record to the database
-     *
+     * The Field class is used to access the properties of the class (generic type) of the data
      * @param data The data to be inserted.
      * @throws SQLException If a database access error occurs
      */
@@ -129,7 +129,7 @@ public abstract class DatabaseHandler<T> {
      * @param data The data sent to update the record in question
      * @throws SQLException If a database access error occurs
      */
-    protected void update(int id, @NotNull T data) throws SQLException {
+    public void update(int id, @NotNull T data) throws SQLException {
         StringBuilder placeholders = new StringBuilder();
         String tableName = this.getTableName();
 
@@ -183,14 +183,12 @@ public abstract class DatabaseHandler<T> {
         }
     }
 
-    // Method that deletes the DB record
     public void delete(int id) {
 
     }
 
     /**
      * Retrieves data from the database as a ResultSet.
-     *
      * @param identifier The field or column used to retrieve the result set
      * @param value      The value of the field that identifies the result set
      * @return ResultSet containing records from the database
@@ -218,7 +216,7 @@ public abstract class DatabaseHandler<T> {
      * Retrieves all records of a table as a ResultSet (or values of a column)
      * @return ResultSet containing all records of a table
      */
-    public ResultSet retrieveAll(String columnName) {
+    protected ResultSet retrieveAll(String columnName) {
         String tableName = this.getTableName();
         String sql = "SELECT " + columnName + " FROM " + tableName;
         Logger.getLogger(className).log(Level.INFO, "SQL Statement -> " + sql);
@@ -237,7 +235,7 @@ public abstract class DatabaseHandler<T> {
     /**
      * Returns all data of a table's column
      * @param columnName The name of the column to get data from
-     * @return List of data of a specific column
+     * @return ArrayList of data of a specific column
      */
     public ArrayList<Object> getColumn(String columnName) {
         ArrayList<Object> columnValues = new ArrayList<>();
@@ -267,7 +265,6 @@ public abstract class DatabaseHandler<T> {
     /**
      * Returns objects of generic type T, representing rows of a table, specified by a field value.
      * The generic type is specified by the models using their corresponding row classes
-     *
      * @param identifier The field or column used to specify the record to be retrieved
      * @param value      Value of the field that identifies the records
      * @return A list of row objects, or null if an error occurs or no records were found
@@ -277,7 +274,6 @@ public abstract class DatabaseHandler<T> {
     /**
      * Returns all rows of a table as objects of generic type T specified by the row classes related
      * to the database models
-     *
      * @return A list of row objects, or null if an error occurs or no records were found
      */
     public abstract ArrayList<T> getAll();
