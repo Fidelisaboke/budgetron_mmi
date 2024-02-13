@@ -1,10 +1,10 @@
 package com.fidelisaboke.budgetron;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.util.logging.Level;
 
 public class BudgetronFrame extends JFrame {
+    public static boolean inMainMenu;
     private static BudgetronFrame instance;
     private String errorMsg;
     private final String className = BudgetronFrame.class.getName();
@@ -22,7 +22,8 @@ public class BudgetronFrame extends JFrame {
     }
 
     public void start(){
-        while(true){
+        inMainMenu = true;
+        while(inMainMenu){
             String input = JOptionPane.showInputDialog(this, """
                 Budgetron Finance Manager
                 1. Budget
@@ -33,19 +34,27 @@ public class BudgetronFrame extends JFrame {
 
             switch(input){
                 case "1"->{
+                    BudgetMenu.getInstance().start();
+                    inMainMenu = false;
                 }
                 case "2"->{
-                    System.out.println("Financial Records");
+                    FinRecordsMenu.getInstance().start();
+                    inMainMenu = false;
                 }
                 case "3"->{
-                    System.out.println("Help");
+                    HelpMenu.getInstance().start();
+                    inMainMenu = false;
                 }
                 case "0"-> {
                     System.out.println("Exiting...");
                     System.exit(1);
                 }
                 default->{
-                    System.out.println("Invalid option. Try again");
+                    MsgHandler.displayMessage(
+                            "Invalid Option",
+                            "Invalid option. Try again.",
+                            className,
+                            Level.SEVERE);
                 }
             }
         }
