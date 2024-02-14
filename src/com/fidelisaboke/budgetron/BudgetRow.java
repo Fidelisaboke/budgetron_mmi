@@ -27,4 +27,9 @@ public class BudgetRow {
         this.amount = amount;
     }
 
+    public String getInfo(){
+        return "Name: " + this.getName() + "\n" +
+                "Amount: " + this.getAmount();
+    }
+
 }
