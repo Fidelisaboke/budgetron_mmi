@@ -1,4 +1,4 @@
-package com.fidelisaboke.budgetron;
+package com.fidelisaboke.budgetron.database.rows;
 
 /**
  * Represents a single row of the Budget table

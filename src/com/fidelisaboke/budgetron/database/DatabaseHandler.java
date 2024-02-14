@@ -1,5 +1,6 @@
-package com.fidelisaboke.budgetron;
+package com.fidelisaboke.budgetron.database;
 
+import com.fidelisaboke.budgetron.utilities.MsgHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;

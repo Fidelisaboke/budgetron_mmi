@@ -1,6 +1,9 @@
-package com.fidelisaboke.budgetron;
+package com.fidelisaboke.budgetron.database.models;
 
-import java.sql.Array;
+import com.fidelisaboke.budgetron.database.rows.BudgetRow;
+import com.fidelisaboke.budgetron.utilities.MsgHandler;
+import com.fidelisaboke.budgetron.database.DatabaseHandler;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ import java.util.logging.Level;
  * It uses the generic type 'BudgetRow' which is a
  * class that represents a single entity of the budgets table
  */
-public class Budget extends DatabaseHandler<BudgetRow>{
+public class Budget extends DatabaseHandler<BudgetRow> {
     private static Budget instance;
     private final String className = Budget.class.getName();
     private Budget(){

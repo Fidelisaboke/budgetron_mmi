@@ -1,74 +1,34 @@
-package com.fidelisaboke.budgetron;
+package com.fidelisaboke.budgetron.menus;
+
+import com.fidelisaboke.budgetron.database.models.Budget;
+import com.fidelisaboke.budgetron.database.rows.BudgetRow;
+import com.fidelisaboke.budgetron.ui.BudgetronFrame;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
-public class BudgetMenu {
-    private static BudgetMenu instance;
-    private final String className = BudgetMenu.class.getName();
-    public static boolean inBudgetMenu;
-    private BudgetMenu(){
+public class GetBudgetsMenu implements BaseMenu {
+    private static GetBudgetsMenu instance;
 
-    }
+    private GetBudgetsMenu(){}
 
-    public static BudgetMenu getInstance(){
+    public static GetBudgetsMenu getInstance(){
         if(instance == null){
-            instance = new BudgetMenu();
+            instance = new GetBudgetsMenu();
         }
+
         return instance;
     }
-
-    public void start(){
-        inBudgetMenu = true;
-        while(inBudgetMenu){
-            executeBudgetMenu();
+    @Override
+    public void start() {
+        MenuManager.setMenuStatus(MenuType.GET_BUDGETS_MENU, false);
+        while(MenuManager.isInMenu(MenuType.GET_BUDGETS_MENU)){
+            execute();
         }
     }
 
-    private void executeBudgetMenu(){
-        String input = JOptionPane.showInputDialog(BudgetronFrame.getInstance(), """
-                Manage Budget
-                1. Get budgets
-                2. Add budget
-                3. Update budget
-                4. Delete budget
-                0. Back to Main Menu""", "Budget Menu", JOptionPane.PLAIN_MESSAGE);
-
-        switch(input){
-            case "1"->{
-                getBudgets();
-            }
-            case "2"->{
-                System.out.println("Add budget");
-            }
-
-            case "3"->{
-                System.out.println("Update budget");
-            }
-
-            case "4"->{
-                System.out.println("Delete budget");
-            }
-
-            case "0"->{
-                inBudgetMenu = false;
-                BudgetronFrame.inMainMenu = true;
-                BudgetronFrame.getInstance().start();
-            }
-
-            default->{
-                MsgHandler.displayMessage(
-                        "Invalid Option",
-                        "Invalid option. Try again.",
-                        className,
-                        Level.SEVERE);
-            }
-
-        }
-    }
-
-    private void getBudgets(){
+    @Override
+    public void execute() {
         String input = JOptionPane.showInputDialog(
                 BudgetronFrame.getInstance(),
                 """
@@ -108,6 +68,11 @@ public class BudgetMenu {
         }
     }
 
+    @Override
+    public void handleOptionInput(String input) {
+
+    }
+
     // Function that displays all budgets on a message dialog
     private void displayAllBudgets(){
         StringBuilder budgetData = new StringBuilder();
@@ -122,5 +87,4 @@ public class BudgetMenu {
                 JOptionPane.PLAIN_MESSAGE
         );
     }
-
 }

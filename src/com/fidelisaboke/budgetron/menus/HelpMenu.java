@@ -1,6 +1,6 @@
-package com.fidelisaboke.budgetron;
+package com.fidelisaboke.budgetron.menus;
 
-public class HelpMenu {
+public class HelpMenu implements BaseMenu {
     private static HelpMenu instance;
     private final String className = FinRecordsMenu.class.getName();
 
@@ -15,7 +15,18 @@ public class HelpMenu {
         return instance;
     }
 
+    @Override
     public void start(){
+
+    }
+
+    @Override
+    public void execute() {
+
+    }
+
+    @Override
+    public void handleOptionInput(String input) {
 
     }
 

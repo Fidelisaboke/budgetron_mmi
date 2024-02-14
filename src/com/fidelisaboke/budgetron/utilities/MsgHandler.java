@@ -1,4 +1,6 @@
-package com.fidelisaboke.budgetron;
+package com.fidelisaboke.budgetron.utilities;
+
+import com.fidelisaboke.budgetron.ui.BudgetronFrame;
 
 import javax.swing.*;
 import java.util.logging.Level;
