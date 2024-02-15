@@ -184,8 +184,33 @@ public abstract class DatabaseHandler<T> {
         }
     }
 
-    public void delete(int id) {
+    public void delete(String identifier, Object value) {
+        String tableName = this.getTableName();
+        String sql = "DELETE FROM " + tableName + " WHERE " + identifier + " = ?";
+        Logger.getLogger(className).log(Level.INFO, sql);
 
+        try{
+            this.connect();
+            pst = conn.prepareStatement(sql);
+            paramIndex = 1;
+            pst.setObject(paramIndex, value);
+
+            pst.executeUpdate();
+            MsgHandler.displayMessage(
+                    "Delete Success",
+                    "The record has been deleted successfully.",
+                    className,
+                    Level.INFO
+                    );
+        } catch (SQLException e) {
+            errorMsg = "Failed to delete: " + e.getMessage();
+            MsgHandler.displayMessage(
+                    "Delete Error",
+                    errorMsg,
+                    className,
+                    Level.SEVERE
+            );
+        }
     }
 
     /**
@@ -197,7 +222,6 @@ public abstract class DatabaseHandler<T> {
     protected ResultSet retrieve(String identifier, Object value) {
         String tableName = this.getTableName();
         String sql = "SELECT * FROM " + tableName + " WHERE " + identifier + " = ?";
-        Logger.getLogger(className).log(Level.INFO, "SQL Statement -> " + sql);
 
         try {
             this.connect();
