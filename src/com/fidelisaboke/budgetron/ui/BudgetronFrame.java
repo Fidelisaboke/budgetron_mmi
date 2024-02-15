@@ -14,7 +14,12 @@ public class BudgetronFrame extends JFrame implements BaseMenu {
     private final String className = BudgetronFrame.class.getName();
 
     private BudgetronFrame(){
-
+        // Frame properties
+        this.setTitle("Budgetron MMI Simulation");
+        this.setSize(400, 400);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     public static BudgetronFrame getInstance(){
