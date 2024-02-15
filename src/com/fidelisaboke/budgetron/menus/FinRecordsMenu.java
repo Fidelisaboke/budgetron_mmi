@@ -33,7 +33,7 @@ public class FinRecordsMenu implements BaseMenu {
                 Financial Records Menu
                 1. Personal financial records
                 2. Business financial records
-                """);
+                """, "Financial Records", JOptionPane.PLAIN_MESSAGE);
 
         handleOptionInput(input);
     }

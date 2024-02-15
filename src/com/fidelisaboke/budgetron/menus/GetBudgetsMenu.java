@@ -21,7 +21,7 @@ public class GetBudgetsMenu implements BaseMenu {
     }
     @Override
     public void start() {
-        MenuManager.setMenuStatus(MenuType.GET_BUDGETS_MENU, false);
+        MenuManager.setMenuStatus(MenuType.GET_BUDGETS_MENU, true);
         while(MenuManager.isInMenu(MenuType.GET_BUDGETS_MENU)){
             execute();
         }
