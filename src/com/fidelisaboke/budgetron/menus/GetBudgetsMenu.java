@@ -63,7 +63,8 @@ public class GetBudgetsMenu implements BaseMenu {
                 );
             }
             case "0"->{
-
+                MenuManager.setMenuStatus(MenuType.GET_BUDGETS_MENU, false);
+                BudgetMenu.getInstance().start();
             }
         }
     }
