@@ -10,7 +10,18 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 public class AddBudgetsMenu implements BaseMenu{
+    private static AddBudgetsMenu instance;
     private final String className = AddBudgetsMenu.class.getName();
+
+    private AddBudgetsMenu;
+
+    public static AddBudgetsMenu getInstance(){
+        if(instance == null){
+            instance = new AddBudgetsMenu();
+        }
+
+        return instance;
+    }
     @Override
     public void start() {
         MenuManager.setMenuStatus(MenuType.ADD_BUDGETS_MENU, true);

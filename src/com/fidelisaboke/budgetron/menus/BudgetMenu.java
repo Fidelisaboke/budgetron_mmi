@@ -48,7 +48,8 @@ public class BudgetMenu implements BaseMenu {
                 MenuManager.setMenuStatus(MenuType.BUDGET_MENU, false);
             }
             case "2"->{
-                System.out.println("Add budget");
+                AddBudgetsMenu.getInstance().start();
+                MenuManager.setMenuStatus(MenuType.BUDGET_MENU, false);
             }
 
             case "3"->{
