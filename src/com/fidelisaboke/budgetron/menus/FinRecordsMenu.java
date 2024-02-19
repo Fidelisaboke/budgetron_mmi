@@ -33,6 +33,7 @@ public class FinRecordsMenu implements BaseMenu {
                 Financial Records Menu
                 1. Personal financial records
                 2. Business financial records
+                0. Back to main menu
                 """, "Financial Records", JOptionPane.PLAIN_MESSAGE);
 
         handleOptionInput(input);
@@ -46,6 +47,10 @@ public class FinRecordsMenu implements BaseMenu {
             }
             case "2" -> {
                 System.out.println("Business financial records");
+            }
+            case "0" -> {
+                MenuManager.setMenuStatus(MenuType.FIN_RECORDS_MENU, false);
+                BudgetronFrame.getInstance().start();
             }
             default -> {
                 MsgHandler.displayMessage("Invalid Option", "Please select a valid option.", className, Level.SEVERE);
