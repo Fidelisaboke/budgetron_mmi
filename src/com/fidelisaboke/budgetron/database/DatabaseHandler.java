@@ -110,12 +110,21 @@ public abstract class DatabaseHandler<T> {
                     pst.setObject(paramIndex++, value);
                 }
             }
-            pst.executeUpdate();
-            MsgHandler.displayMessage(
-                    "Insert Success",
-                    "Data inserted successfully.",
-                    className,
-                    Level.INFO);
+            Logger.getLogger(className).log(Level.SEVERE, "Prepared Stmt ->" + pst.toString());
+            if(pst.executeUpdate()==1){
+                MsgHandler.displayMessage(
+                        "Insert Success",
+                        "Data inserted successfully.",
+                        className,
+                        Level.INFO);
+            }else{
+                MsgHandler.displayMessage(
+                        "Insert Error",
+                        "An error occured. No record inserted.",
+                        className,
+                        Level.SEVERE
+                );
+            }
             this.close();
         } catch (IllegalAccessException e) {
             errorMsg = "Error accessing field while setting params: " + e.getMessage();
@@ -138,7 +147,6 @@ public abstract class DatabaseHandler<T> {
         for (Field field : fields) {
             field.setAccessible(true);
             String columnName = field.getName();
-            System.out.println(columnName);
             Object value;
             try {
                 value = field.get(data);
@@ -147,7 +155,7 @@ public abstract class DatabaseHandler<T> {
                 MsgHandler.displayMessage("An error occurred", errorMsg, className, Level.SEVERE);
                 throw new SQLException(errorMsg);
             }
-            if (value != null || !columnName.equals("id")) {
+            if (value != null && !columnName.equals("id")) {
                 if (placeholders.length() > 0) {
                     placeholders.append(", ");
                 }
@@ -165,17 +173,28 @@ public abstract class DatabaseHandler<T> {
             for (Field field : fields) {
                 field.setAccessible(true);
                 Object value = field.get(data);
-                if (value != null) {
+                if (value != null && !field.getName().equals("id")) {
                     pst.setObject(paramIndex++, value);
                 }
             }
             pst.setInt(paramIndex, id);
-            pst.executeUpdate();
-            MsgHandler.displayMessage(
-                    "Update Success",
-                    "Data successfully updated",
-                    className,
-                    Level.INFO);
+            Logger.getLogger(className).log(Level.SEVERE, "Prepared Stmt ->" + pst.toString());
+
+            if(pst.executeUpdate() == 1){
+                MsgHandler.displayMessage(
+                        "Update Success",
+                        "Data successfully updated",
+                        className,
+                        Level.INFO);
+            }else{
+                MsgHandler.displayMessage(
+                        "Update Error",
+                        "Failed to update. No records affected.",
+                        className,
+                        Level.SEVERE
+                );
+            };
+
             this.close();
         } catch (IllegalAccessException e) {
             errorMsg = "Error accessing field when setting params: " + e.getMessage();
@@ -194,14 +213,24 @@ public abstract class DatabaseHandler<T> {
             pst = conn.prepareStatement(sql);
             paramIndex = 1;
             pst.setObject(paramIndex, value);
+            Logger.getLogger(className).log(Level.SEVERE, "Prepared Stmt ->" + pst.toString());
 
-            pst.executeUpdate();
-            MsgHandler.displayMessage(
-                    "Delete Success",
-                    "The record has been deleted successfully.",
-                    className,
-                    Level.INFO
-                    );
+            if(pst.executeUpdate()==1){
+                MsgHandler.displayMessage(
+                        "Delete Success",
+                        "The record has been deleted successfully.",
+                        className,
+                        Level.INFO
+                );
+            }else{
+                MsgHandler.displayMessage(
+                        "Delete Failed",
+                        "An error occurred when deleting the record.",
+                        className,
+                        Level.SEVERE
+                );
+            }
+
         } catch (SQLException e) {
             errorMsg = "Failed to delete: " + e.getMessage();
             MsgHandler.displayMessage(

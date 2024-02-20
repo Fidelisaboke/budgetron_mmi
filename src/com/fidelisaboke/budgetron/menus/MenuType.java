@@ -7,5 +7,6 @@ public enum MenuType {
     GET_BUDGETS_MENU,
     HELP_MENU,
     MAIN_MENU,
+    UPDATE_BUDGETS_MENU
 
 }
