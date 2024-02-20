@@ -77,14 +77,12 @@ public class HelpMenu implements BaseMenu {
                 MenuManager.setMenuStatus(MenuType.HELP_MENU, false);
                 BudgetronFrame.getInstance().start();
             }
-            default->{
-                MsgHandler.displayMessage(
-                        "Invalid option",
-                        "Please select a valid option.",
-                        className,
-                        Level.SEVERE
-                );
-            }
+            default-> MsgHandler.displayMessage(
+                    "Invalid option",
+                    "Please select a valid option.",
+                    className,
+                    Level.SEVERE
+            );
         }
     }
 

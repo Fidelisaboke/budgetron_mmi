@@ -42,10 +42,13 @@ public class GetBudgetsMenu implements BaseMenu {
                 "Display Budgets",
                 JOptionPane.PLAIN_MESSAGE);
 
+        handleOptionInput(input);
+    }
+
+    @Override
+    public void handleOptionInput(String input) {
         switch (input){
-            case "1"->{
-                displayAllBudgets();
-            }
+            case "1"-> displayAllBudgets();
             case "2"->{
                 String budgetName = JOptionPane.showInputDialog(
                         BudgetronFrame.getInstance(),
@@ -58,6 +61,13 @@ public class GetBudgetsMenu implements BaseMenu {
                 try{
                     BudgetRow budgetRow = Budget.getInstance().get("name", budgetName);
                     String budgetRecord = budgetRow.getInfo();
+
+                    JOptionPane.showMessageDialog(
+                            BudgetronFrame.getInstance(),
+                            budgetRecord,
+                            "Budget Info",
+                            JOptionPane.PLAIN_MESSAGE
+                    );
                 } catch (NullPointerException e){
                     String errorMsg = """
                             Unable to get budget info:
@@ -69,26 +79,12 @@ public class GetBudgetsMenu implements BaseMenu {
                             Level.SEVERE
                     );
                 }
-                BudgetRow budgetRow = Budget.getInstance().get("name", budgetName);
-                String budgetRecord = budgetRow.getInfo();
-
-                JOptionPane.showMessageDialog(
-                        BudgetronFrame.getInstance(),
-                        budgetRecord,
-                        "Budget Info",
-                        JOptionPane.PLAIN_MESSAGE
-                );
             }
             case "0"->{
                 MenuManager.setMenuStatus(MenuType.GET_BUDGETS_MENU, false);
                 BudgetMenu.getInstance().start();
             }
         }
-    }
-
-    @Override
-    public void handleOptionInput(String input) {
-
     }
 
     // Function that displays all budgets on a message dialog

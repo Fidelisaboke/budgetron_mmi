@@ -1,14 +1,11 @@
 package com.fidelisaboke.budgetron.menus;
 
-import com.fidelisaboke.budgetron.database.DatabaseHandler;
 import com.fidelisaboke.budgetron.database.models.Budget;
 import com.fidelisaboke.budgetron.ui.BudgetronFrame;
 
 import javax.swing.*;
 
 public class DeleteBudgetsMenu implements BaseMenu{
-    private final String className = DeleteBudgetsMenu.class.getName();
-
     private static DeleteBudgetsMenu instance;
 
     private DeleteBudgetsMenu() {}

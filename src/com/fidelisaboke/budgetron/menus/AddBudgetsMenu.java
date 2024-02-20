@@ -13,7 +13,7 @@ public class AddBudgetsMenu implements BaseMenu{
     private static AddBudgetsMenu instance;
     private final String className = AddBudgetsMenu.class.getName();
 
-    private AddBudgetsMenu(){};
+    private AddBudgetsMenu(){}
 
     public static AddBudgetsMenu getInstance(){
         if(instance == null){

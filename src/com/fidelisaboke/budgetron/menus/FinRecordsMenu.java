@@ -42,19 +42,13 @@ public class FinRecordsMenu implements BaseMenu {
     @Override
     public void handleOptionInput(String input) {
         switch (input) {
-            case "1" -> {
-                System.out.println("Personal financial records");
-            }
-            case "2" -> {
-                System.out.println("Business financial records");
-            }
+            case "1" -> System.out.println("Personal financial records");
+            case "2" -> System.out.println("Business financial records");
             case "0" -> {
                 MenuManager.setMenuStatus(MenuType.FIN_RECORDS_MENU, false);
                 BudgetronFrame.getInstance().start();
             }
-            default -> {
-                MsgHandler.displayMessage("Invalid Option", "Please select a valid option.", className, Level.SEVERE);
-            }
+            default -> MsgHandler.displayMessage("Invalid Option", "Please select a valid option.", className, Level.SEVERE);
 
         }
     }

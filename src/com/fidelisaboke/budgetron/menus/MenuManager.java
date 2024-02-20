@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MenuManager {
-    private static Map<MenuType, Boolean> menuStatus = new HashMap<>();
+    private static final Map<MenuType, Boolean> menuStatus = new HashMap<>();
 
 
     // Initial values set to 'false', ensuring all menus are 'inactive' on running the program
