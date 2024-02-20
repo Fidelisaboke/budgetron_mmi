@@ -33,10 +33,11 @@ public class Budget extends DatabaseHandler<BudgetRow> {
         try{
             ResultSet rs = super.retrieve(identifier, value);
             if(rs.next()){
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 double amount = rs.getDouble("amount");
                 rs.close();
-                return new BudgetRow(name, amount);
+                return new BudgetRow(id, name, amount);
             }
             rs.close();
         } catch (SQLException e){
@@ -52,9 +53,10 @@ public class Budget extends DatabaseHandler<BudgetRow> {
         try{
             ResultSet rs = super.retrieve(identifier, value);
             while(rs.next()){
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 double amount = rs.getDouble("amount");
-                budgetRows.add(new BudgetRow(name, amount));
+                budgetRows.add(new BudgetRow(id, name, amount));
             }
             rs.close();
         } catch (SQLException e){
@@ -70,9 +72,10 @@ public class Budget extends DatabaseHandler<BudgetRow> {
         try{
             ResultSet rs = super.retrieveAll("*");
             while(rs.next()){
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 double amount = rs.getDouble("amount");
-                budgetRows.add(new BudgetRow(name, amount));
+                budgetRows.add(new BudgetRow(id, name, amount));
             }
             rs.close();
         } catch (SQLException e){

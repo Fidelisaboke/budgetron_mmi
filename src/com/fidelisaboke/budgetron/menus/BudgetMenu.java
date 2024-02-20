@@ -53,11 +53,13 @@ public class BudgetMenu implements BaseMenu {
             }
 
             case "3"->{
-                System.out.println("Update budget");
+                UpdateBudgetsMenu.getInstance().start();
+                MenuManager.setMenuStatus(MenuType.BUDGET_MENU, false);
             }
 
             case "4"->{
-                System.out.println("Delete budget");
+                DeleteBudgetsMenu.getInstance().start();
+                MenuManager.setMenuStatus(MenuType.BUDGET_MENU, false);
             }
 
             case "0"->{
@@ -65,13 +67,11 @@ public class BudgetMenu implements BaseMenu {
                 MenuManager.setMenuStatus(MenuType.BUDGET_MENU, false);
             }
 
-            default->{
-                MsgHandler.displayMessage(
-                        "Invalid Option",
-                        "Invalid option. Try again.",
-                        className,
-                        Level.SEVERE);
-            }
+            default-> MsgHandler.displayMessage(
+                    "Invalid Option",
+                    "Invalid option. Try again.",
+                    className,
+                    Level.SEVERE);
 
         }
     }

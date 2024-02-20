@@ -3,12 +3,15 @@ package com.fidelisaboke.budgetron.menus;
 import com.fidelisaboke.budgetron.database.models.Budget;
 import com.fidelisaboke.budgetron.database.rows.BudgetRow;
 import com.fidelisaboke.budgetron.ui.BudgetronFrame;
+import com.fidelisaboke.budgetron.utilities.MsgHandler;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class GetBudgetsMenu implements BaseMenu {
     private static GetBudgetsMenu instance;
+    private final String className = GetBudgetsMenu.class.getName();
 
     private GetBudgetsMenu(){}
 
@@ -52,6 +55,20 @@ public class GetBudgetsMenu implements BaseMenu {
                         JOptionPane.PLAIN_MESSAGE
                 );
 
+                try{
+                    BudgetRow budgetRow = Budget.getInstance().get("name", budgetName);
+                    String budgetRecord = budgetRow.getInfo();
+                } catch (NullPointerException e){
+                    String errorMsg = """
+                            Unable to get budget info:
+                            """ + e.getMessage();
+                    MsgHandler.displayMessage(
+                            "An error occurred",
+                            errorMsg,
+                            className,
+                            Level.SEVERE
+                    );
+                }
                 BudgetRow budgetRow = Budget.getInstance().get("name", budgetName);
                 String budgetRecord = budgetRow.getInfo();
 
