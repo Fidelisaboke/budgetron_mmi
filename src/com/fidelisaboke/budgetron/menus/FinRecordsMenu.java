@@ -42,6 +42,10 @@ public class FinRecordsMenu implements BaseMenu {
     @Override
     public void handleOptionInput(String input) {
         switch (input) {
+            /* Todo: Implement functionality for handling financial records
+            - Synchronize with the budget management functionality
+            - Create database entities for managing financial records
+             */
             case "1" -> System.out.println("Personal financial records");
             case "2" -> System.out.println("Business financial records");
             case "0" -> {
