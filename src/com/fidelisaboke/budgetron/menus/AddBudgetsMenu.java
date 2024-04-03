@@ -13,6 +13,7 @@ public class AddBudgetsMenu implements BaseMenu{
     private static AddBudgetsMenu instance;
     private final String className = AddBudgetsMenu.class.getName();
 
+    private String errorMsg;
     private AddBudgetsMenu(){}
 
     public static AddBudgetsMenu getInstance(){
@@ -70,9 +71,19 @@ public class AddBudgetsMenu implements BaseMenu{
         } else{
             try{
                 double budgetAmount =  Double.parseDouble(input);
+                if(budgetAmount > 10000000){
+                    errorMsg = "Budget too large. Enter a value less than 10 million.";
+                    MsgHandler.displayMessage(
+                            "Budget size error",
+                            errorMsg,
+                            className,
+                            Level.SEVERE
+                    );
+                    throw new SQLException("Budget is too high");
+                }
                 Budget.getInstance().insert(new BudgetRow(budgetName, budgetAmount));
             } catch (NumberFormatException e){
-                String errorMsg = "Invalid amount: " + e.getMessage();
+                errorMsg = "Invalid amount: " + e.getMessage();
                 MsgHandler.displayMessage(
                         "An error occurred",
                         errorMsg,
@@ -80,7 +91,7 @@ public class AddBudgetsMenu implements BaseMenu{
                         Level.SEVERE
                 );
             } catch (SQLException e){
-                String errorMsg = "Failed to insert budget: " + e.getMessage();
+                errorMsg = "Failed to insert budget: " + e.getMessage();
                 MsgHandler.displayMessage(
                         "Budget Insert Error",
                         errorMsg,
